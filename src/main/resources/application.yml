@@ -1,0 +1,24 @@
+app:
+  biker-location-consumer-enabled: false
+
+spring:
+
+  kafka:
+    bootstrap-servers: localhost:9091
+    consumer:
+      group-id: ride-spy
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "*"
+      enable-auto-commit: false
+    topic:
+      biker-event: BIKER_EVENT
+    listener:
+      missing-topics-fatal: false
+      ack-mode: manual
+
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/RideSpy
