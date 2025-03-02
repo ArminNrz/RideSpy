@@ -3,6 +3,7 @@ package com.example.ridespy.infra.ports.persitence;
 import com.example.ridespy.application.port.BikerRepository;
 import com.example.ridespy.domain.Biker;
 import com.example.ridespy.domain.vo.BikerId;
+import com.example.ridespy.domain.vo.BikerLocation;
 import com.example.ridespy.infra.ports.persitence.document.BikerDocument;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +28,7 @@ public class BikerRepositoryImpl implements BikerRepository {
         BikerDocument document = documentOpt.get();
         var domain = Biker.of(
                 document.getId(),
-                document.getLocation(),
+                new BikerLocation(document.getPoint().getY(), document.getPoint().getX(), document.getTimestamp()),
                 document.getAvailability(),
                 document.getEvents()
         );
@@ -36,6 +37,13 @@ public class BikerRepositoryImpl implements BikerRepository {
 
     @Override
     public void save(Biker biker) {
+        BikerDocument document = new BikerDocument();
+        document.setId(biker.getId().id());
+        document.setAvailability(biker.getAvailability());
+        document.setEvents(biker.getEventsAsList());
+        document.setTimestamp(biker.getLocation().getTimestamp());
+        document.setPoint(biker.getLocation().getGeoJsonPoint());
 
+        repository.save(document);
     }
 }

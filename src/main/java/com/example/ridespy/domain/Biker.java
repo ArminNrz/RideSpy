@@ -4,7 +4,6 @@ import com.example.ridespy.domain.util.IdGenerator;
 import com.example.ridespy.domain.vo.BikerAvailability;
 import com.example.ridespy.domain.vo.BikerId;
 import com.example.ridespy.domain.vo.BikerLocation;
-import lombok.Getter;
 import lombok.ToString;
 
 import java.io.Serializable;

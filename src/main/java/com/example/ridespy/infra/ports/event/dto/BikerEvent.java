@@ -6,7 +6,7 @@ import com.example.ridespy.domain.vo.EventType;
 import java.io.Serializable;
 
 public record BikerEvent(
-        EventType eventType,
+        EventType type,
         String bikerId,
         BikerAvailability availability,
         Double lat,

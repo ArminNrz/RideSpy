@@ -4,6 +4,7 @@ import com.example.ridespy.domain.util.DateTimeUtils;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
+import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 
 import java.io.Serializable;
 
@@ -36,5 +37,9 @@ public class BikerLocation implements Serializable {
 
     public long getTimestamp() {
         return timestamp;
+    }
+
+    public GeoJsonPoint getGeoJsonPoint() {
+        return new GeoJsonPoint(longitude, latitude);
     }
 }

@@ -2,8 +2,10 @@ package com.example.ridespy.infra.ports.persitence.document;
 
 import com.example.ridespy.domain.BikerLocationEvent;
 import com.example.ridespy.domain.vo.BikerAvailability;
-import com.example.ridespy.domain.vo.BikerLocation;
 import lombok.Data;
+import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
+import org.springframework.data.mongodb.core.index.GeoSpatialIndexType;
+import org.springframework.data.mongodb.core.index.GeoSpatialIndexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
@@ -14,8 +16,11 @@ import java.util.List;
 public class BikerDocument {
     private String id;
     private BikerAvailability availability;
-    private BikerLocation location;
     private List<BikerLocationEvent> events = new ArrayList<>();
+    private long timestamp;
+
+    @GeoSpatialIndexed(type = GeoSpatialIndexType.GEO_2DSPHERE)
+    private GeoJsonPoint point;
 
     public String getId() {
         return id;
@@ -25,11 +30,15 @@ public class BikerDocument {
         return availability;
     }
 
-    public BikerLocation getLocation() {
-        return location;
+    public long getTimestamp() {
+        return timestamp;
     }
 
     public List<BikerLocationEvent> getEvents() {
         return events;
+    }
+
+    public GeoJsonPoint getPoint() {
+        return point;
     }
 }
