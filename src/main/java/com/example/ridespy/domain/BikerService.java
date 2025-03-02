@@ -4,14 +4,16 @@ import com.example.ridespy.application.port.BikerRepository;
 import com.example.ridespy.domain.exception.BikerNotFoundException;
 import com.example.ridespy.domain.vo.BikerAvailability;
 import com.example.ridespy.domain.vo.BikerId;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-@RequiredArgsConstructor
 @Service
 public class BikerService {
 
     private final BikerRepository repository;
+
+    public BikerService(BikerRepository repository) {
+        this.repository = repository;
+    }
 
     public void updateLocation(BikerId bikerId, double lat, double lon) {
         var domainOptional = repository.findById(bikerId);

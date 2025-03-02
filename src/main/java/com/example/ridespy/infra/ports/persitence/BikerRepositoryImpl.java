@@ -3,16 +3,19 @@ package com.example.ridespy.infra.ports.persitence;
 import com.example.ridespy.application.port.BikerRepository;
 import com.example.ridespy.domain.Biker;
 import com.example.ridespy.domain.vo.BikerId;
-import lombok.RequiredArgsConstructor;
+import com.example.ridespy.infra.ports.persitence.document.BikerDocument;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class BikerRepositoryImpl implements BikerRepository {
 
     private final BikerMongoRepository repository;
+
+    public BikerRepositoryImpl(BikerMongoRepository repository) {
+        this.repository = repository;
+    }
 
     @Override
     public Optional<Biker> findById(BikerId bikerId) {
@@ -21,7 +24,7 @@ public class BikerRepositoryImpl implements BikerRepository {
             return Optional.empty();
         }
 
-        var document = documentOpt.get();
+        BikerDocument document = documentOpt.get();
         var domain = Biker.of(
                 document.getId(),
                 document.getLocation(),

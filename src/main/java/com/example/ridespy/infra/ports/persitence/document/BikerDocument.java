@@ -16,4 +16,20 @@ public class BikerDocument {
     private BikerAvailability availability;
     private BikerLocation location;
     private List<BikerLocationEvent> events = new ArrayList<>();
+
+    public String getId() {
+        return id;
+    }
+
+    public BikerAvailability getAvailability() {
+        return availability;
+    }
+
+    public BikerLocation getLocation() {
+        return location;
+    }
+
+    public List<BikerLocationEvent> getEvents() {
+        return events;
+    }
 }
