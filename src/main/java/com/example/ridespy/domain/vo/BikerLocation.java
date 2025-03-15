@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import java.io.Serializable;
 
 @ToString
-@EqualsAndHashCode
+@EqualsAndHashCode(exclude = "timestamp")
 public class BikerLocation implements Serializable {
     private final double latitude;
     private final double longitude;
@@ -27,6 +27,10 @@ public class BikerLocation implements Serializable {
         this.timestamp = timestamp;
     }
 
+    public GeoJsonPoint getGeoJsonPoint() {
+        return new GeoJsonPoint(longitude, latitude);
+    }
+
     public double getLatitude() {
         return latitude;
     }
@@ -37,9 +41,5 @@ public class BikerLocation implements Serializable {
 
     public long getTimestamp() {
         return timestamp;
-    }
-
-    public GeoJsonPoint getGeoJsonPoint() {
-        return new GeoJsonPoint(longitude, latitude);
     }
 }

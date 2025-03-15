@@ -8,10 +8,10 @@ import java.util.Optional;
 @Service
 public class BikerService {
 
-    public Biker updateLocation(Optional<Biker> domainOptional, double lat, double lon) {
+    public Biker updateLocation(Optional<Biker> domainOptional, String bikerId, double lat, double lon) {
         Biker updatedDomain;
         if (domainOptional.isEmpty()) {
-            updatedDomain = Biker.create(lat, lon);
+            updatedDomain = Biker.create(bikerId, lat, lon);
         }
         else {
             updatedDomain = domainOptional.get().updateLocation(lat, lon);

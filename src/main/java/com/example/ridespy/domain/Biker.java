@@ -4,6 +4,7 @@ import com.example.ridespy.domain.util.IdGenerator;
 import com.example.ridespy.domain.vo.BikerAvailability;
 import com.example.ridespy.domain.vo.BikerId;
 import com.example.ridespy.domain.vo.BikerLocation;
+import lombok.Getter;
 import lombok.ToString;
 
 import java.io.Serializable;
@@ -17,13 +18,16 @@ import static com.example.ridespy.domain.vo.EventType.UPDATE;
 
 @ToString
 public class Biker implements Serializable {
+    @Getter
     private final BikerId id;
+    @Getter
     private BikerLocation location;
+    @Getter
     private BikerAvailability availability;
     private final Queue<BikerLocationEvent> eventQueue;
 
-    private Biker(double lat, double lon) {
-        this.id = new BikerId(IdGenerator.generateId());
+    private Biker(String id, double lat, double lon) {
+        this.id = new BikerId(id);
         this.location = new BikerLocation(lat, lon);
         this.availability = ONLINE;
         this.eventQueue = new LinkedList<>();
@@ -36,8 +40,8 @@ public class Biker implements Serializable {
         this.eventQueue = new LinkedList<>();
     }
 
-    public static Biker create(double lat, double lon) {
-        var biker = new Biker(lat, lon);
+    public static Biker create(String bikerId, double lat, double lon) {
+        var biker = new Biker(bikerId, lat, lon);
         biker.eventQueue.offer(new BikerLocationEvent(biker, CREATE));
         return biker;
     }
@@ -53,7 +57,11 @@ public class Biker implements Serializable {
     }
 
     public Biker updateLocation(double lat, double lon) {
-        this.location = new BikerLocation(lat, lon);
+        BikerLocation newLocation = new BikerLocation(lat, lon);
+        if (this.location.equals(newLocation)) {
+            return this;
+        }
+        this.location = newLocation;
         this.eventQueue.offer(new BikerLocationEvent(this, UPDATE));
         return this;
     }
@@ -65,17 +73,5 @@ public class Biker implements Serializable {
 
     public List<BikerLocationEvent> getEventsAsList() {
         return new LinkedList<>(this.eventQueue);
-    }
-
-    public BikerId getId() {
-        return id;
-    }
-
-    public BikerLocation getLocation() {
-        return location;
-    }
-
-    public BikerAvailability getAvailability() {
-        return availability;
     }
 }

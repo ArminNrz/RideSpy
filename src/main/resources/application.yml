@@ -1,15 +1,15 @@
 app:
-  biker-location-consumer-enabled: false
+  biker-location-consumer-enabled: true
 
 spring:
 
   kafka:
-    bootstrap-servers: localhost:9091
+    bootstrap-servers: localhost:9092
     consumer:
       group-id: ride-spy
       auto-offset-reset: earliest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       properties:
         spring.json.trusted.packages: "*"
       enable-auto-commit: false
